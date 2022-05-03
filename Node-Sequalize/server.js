@@ -6,6 +6,8 @@ const User = require("./models/users");
 const Product = require("./models/products");
 const Cart = require("./models/cart");
 const CartItem = require("./models/cart-item");
+const Order = require("./models/order");
+const OrderItem = require("./models/order-item");
 
 const sequelize = require("./util/database");
 const res = require("express/lib/response");
@@ -129,6 +131,11 @@ Cart.belongsTo(User);
 
 Cart.belongsToMany(Product, { through: CartItem }); //telling sequelize where these connections should be stored(CartItem)
 Product.belongsToMany(Cart, { through: CartItem });
+
+Order.belongsTo(User);
+User.hasMany(Order);
+
+Order.belongsToMany(Product, { through: OrderItem }); //using the orderItem in between table to create order
 
 //----------------------------------  cart -------------------------------------------
 
